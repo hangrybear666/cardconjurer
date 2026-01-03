@@ -158,7 +158,7 @@ async function setBottomInfoStyle() {
 				const fontSizePercent = card.centeredArtistFontSize || 100;
 				const baseFontSize = 0.0267; // Seventh Edition base font size
 				const calculatedSize = baseFontSize * (fontSizePercent / 100);
-				const textColorOverride = card.centeredArtistTextColor || "#DDDDDD"
+				const textColorOverride = card.centeredArtistTextColor || "#BBBBBB"
 
 				bottomInfoConfig.centeredArtist = {
 					text: 'Illus. {elemidinfo-artist}',
@@ -195,7 +195,7 @@ async function setBottomInfoStyle() {
 				const fontSizePercent = card.centeredArtistFontSize || 100;
 				const baseFontSize = 0.0267; // Seventh Edition base font size
 				const calculatedSize = baseFontSize * (fontSizePercent / 100);
-				const textColorOverride = card.centeredArtistTextColor || "#DDDDDD"
+				const textColorOverride = card.centeredArtistTextColor || "#BBBBBB"
 
 				bottomInfoConfig.centeredArtist = {
 					text: 'Illus. {elemidinfo-artist}',
@@ -5058,7 +5058,7 @@ async function resetCenteredArtist() {
 	card.centeredArtistX = scaleX(201/2010);
 	card.centeredArtistY = scaleY(2485/2814);
 	card.centeredArtistFontSize = 100;
-	card.centeredArtistTextColor = "#DDDDDD"
+	card.centeredArtistTextColor = "#BBBBBB"
 
 	document.querySelector('#centered-artist-x').value = card.centeredArtistX;
 	document.querySelector('#centered-artist-y').value = card.centeredArtistY;
