@@ -605,6 +605,19 @@
 							</div>
 						</div>
 						<div class='readable-background padding margin-bottom'>
+							<h5 class='input-description margin-bottom'>Seventh Edition Artist Display</h5>
+							<label class='checkbox-container input margin-bottom'>Enable centered artist credit
+								<input id='enableCenteredArtist' type='checkbox' onchange='toggleCenteredArtist();'>
+								<span class='checkmark'></span>
+							</label>
+							<div class='padding input-grid'>
+								<input id='centered-artist-x' type='number' class='input' oninput='centeredArtistEdited();' min='0' value='201' placeholder='X Position'>
+								<input id='centered-artist-y' type='number' class='input' oninput='centeredArtistEdited();' min='0' value='2557' placeholder='Y Position'>
+								<input id='centered-artist-font-size' type='number' class='input' oninput='centeredArtistEdited();' min='50' max='300' value='150' placeholder='Font Size %'>
+							</div>
+							<button class='button' onclick='resetCenteredArtist();'>Reset Position</button>
+						</div>
+						<div class='readable-background padding margin-bottom'>
 							<h5 class='input-description margin-bottom'>Enable importing collector information</h5>
 							<label class='checkbox-container input margin-bottom'>Enable imports
 								<input id='enableImportCollectorInfo' type='checkbox' onchange='enableImportCollectorInfo();'>

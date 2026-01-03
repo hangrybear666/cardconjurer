@@ -48,6 +48,8 @@ function getStandardHeight() {
 
 //card object
 var card = {width:getStandardWidth(), height:getStandardHeight(), marginX:0, marginY:0, frames:[], artSource:fixUri('/img/blank.png'), artX:0, artY:0, artZoom:1, artRotate:0, setSymbolSource:fixUri('/img/blank.png'), setSymbolX:0, setSymbolY:0, setSymbolZoom:1, watermarkSource:fixUri('/img/blank.png'), watermarkX:0, watermarkY:0, watermarkZoom:1, watermarkLeft:'none', watermarkRight:'none', watermarkOpacity:0.4, version:'', manaSymbols:[]};
+//centered artist toggle state
+let centeredArtistEnabled = localStorage.getItem('centeredArtistEnabled') === 'true';
 //core images/masks
 const black = new Image(); black.crossOrigin = 'anonymous'; black.src = fixUri('/img/black.png');
 const blank = new Image(); blank.crossOrigin = 'anonymous'; blank.src = fixUri('/img/blank.png');
@@ -143,24 +145,78 @@ async function resetCardIrregularities({canvas = [getStandardWidth(), getStandar
 }
 async function setBottomInfoStyle() {
 	if (document.querySelector('#enableNewCollectorStyle').checked) {
-			await loadBottomInfo({
-				midLeft: {text:'{elemidinfo-set} \u2022 {elemidinfo-language}  {savex}{fontbelerenbsc}{fontsize' + scaleHeight(0.001) + '}{upinline' + scaleHeight(0.0005) + '}\uFFEE{savex2}{elemidinfo-artist}', x:0.0647, y:0.9548, width:0.8707, height:0.0171, oneLine:true, font:'gothammedium', size:0.0171, color:card.bottomInfoColor, outlineWidth:0.003},
-				topLeft: {text:'{elemidinfo-rarity} {kerning3}{elemidinfo-number}{kerning0}', x:0.0647, y:0.9377, width:0.8707, height:0.0171, oneLine:true, font:'gothammedium', size:0.0171, color:card.bottomInfoColor, outlineWidth:0.003},
+			// Build bottom info object with conditional artist display
+			const bottomInfoConfig = {
 				note: {text:'{loadx}{elemidinfo-note}', x:0.0647, y:0.9377, width:0.8707, height:0.0171, oneLine:true, font:'gothammedium', size:0.0171, color:card.bottomInfoColor, outlineWidth:0.003},
 				bottomLeft: {text:'NOT FOR SALE', x:0.0647, y:0.9719, width:0.8707, height:0.0143, oneLine:true, font:'gothammedium', size:0.0143, color:card.bottomInfoColor, outlineWidth:0.003},
 				wizards: {name:'wizards', text:'{ptshift0,0.0172}\u2122 & \u00a9 {elemidinfo-year} Wizards of the Coast', x:0.0647, y:0.9377, width:0.8707, height:0.0167, oneLine:true, font:'mplantin', size:0.0162, color:card.bottomInfoColor, align:'right', outlineWidth:0.003},
 				bottomRight: {text:'{ptshift0,0.0172}CardConjurer.com', x:0.0647, y:0.9548, width:0.8707, height:0.0143, oneLine:true, font:'mplantin', size:0.0143, color:card.bottomInfoColor, align:'right', outlineWidth:0.003}
-			});
+			};
+
+			// Add artist display based on toggle state
+			if (centeredArtistEnabled) {
+				const fontSizePercent = card.centeredArtistFontSize || 150;
+				const baseFontSize = 0.0267; // Seventh Edition base font size
+				const calculatedSize = baseFontSize * (fontSizePercent / 100);
+
+				bottomInfoConfig.centeredArtist = {
+					text: 'Illus. {elemidinfo-artist}',
+					x: card.centeredArtistX / card.width || 0.1,
+					y: card.centeredArtistY / card.height || 0.91,
+					width: 0.8,
+					height: calculatedSize,
+					oneLine: true,
+					font: 'mplantin',
+					size: calculatedSize,
+					color: card.bottomInfoColor,
+					align: 'center',
+					shadowX: 0.0021,
+					shadowY: 0.0015
+				};
+			} else {
+				// Only show topLeft when centered artist is disabled
+				bottomInfoConfig.topLeft = {text:'{elemidinfo-rarity} {kerning3}{elemidinfo-number}{kerning0}', x:0.0647, y:0.9377, width:0.8707, height:0.0171, oneLine:true, font:'gothammedium', size:0.0171, color:card.bottomInfoColor, outlineWidth:0.003};
+				bottomInfoConfig.midLeft = {text:'{elemidinfo-set} \u2022 {elemidinfo-language}  {savex}{fontbelerenbsc}{fontsize' + scaleHeight(0.001) + '}{upinline' + scaleHeight(0.0005) + '}\uFFEE{savex2}{elemidinfo-artist}', x:0.0647, y:0.9548, width:0.8707, height:0.0171, oneLine:true, font:'gothammedium', size:0.0171, color:card.bottomInfoColor, outlineWidth:0.003};
+			}
+
+			await loadBottomInfo(bottomInfoConfig);
 		} else {
-			await loadBottomInfo({
-				midLeft: {text:'{elemidinfo-set} \u2022 {elemidinfo-language}  {savex}{fontbelerenbsc}{fontsize' + scaleHeight(0.001) + '}{upinline' + scaleHeight(0.0005) + '}\uFFEE{savex2}{elemidinfo-artist}', x:0.0647, y:0.9548, width:0.8707, height:0.0171, oneLine:true, font:'gothammedium', size:0.0171, color: card.bottomInfoColor, outlineWidth:0.003},
-				topLeft: {text:'{elemidinfo-number}', x:0.0647, y:0.9377, width:0.8707, height:0.0171, oneLine:true, font:'gothammedium', size:0.0171, color:card.bottomInfoColor, outlineWidth:0.003},
+			// Build bottom info object with conditional artist display
+			const bottomInfoConfig = {
 				note: {text:'{loadx2}{elemidinfo-note}', x:0.0647, y:0.9377, width:0.8707, height:0.0171, oneLine:true, font:'gothammedium', size:0.0171, color:card.bottomInfoColor, outlineWidth:0.003},
-				rarity: {text:'{loadx}{elemidinfo-rarity}', x:0.0647, y:0.9377, width:0.8707, height:0.0171, oneLine:true, font:'gothammedium', size:0.0171, color:card.bottomInfoColor, outlineWidth:0.003},
 				bottomLeft: {text:'NOT FOR SALE', x:0.0647, y:0.9719, width:0.8707, height:0.0143, oneLine:true, font:'gothammedium', size:0.0143, color:card.bottomInfoColor, outlineWidth:0.003},
 				wizards: {name:'wizards', text:'{ptshift0,0.0172}\u2122 & \u00a9 {elemidinfo-year} Wizards of the Coast', x:0.0647, y:0.9377, width:0.8707, height:0.0167, oneLine:true, font:'mplantin', size:0.0162, color:card.bottomInfoColor, align:'right', outlineWidth:0.003},
 				bottomRight: {text:'{ptshift0,0.0172}CardConjurer.com', x:0.0647, y:0.9548, width:0.8707, height:0.0143, oneLine:true, font:'mplantin', size:0.0143, color:card.bottomInfoColor, align:'right', outlineWidth:0.003}
-			});
+			};
+
+			// Add artist display based on toggle state
+			if (centeredArtistEnabled) {
+				const fontSizePercent = card.centeredArtistFontSize || 150;
+				const baseFontSize = 0.0267; // Seventh Edition base font size
+				const calculatedSize = baseFontSize * (fontSizePercent / 100);
+
+				bottomInfoConfig.centeredArtist = {
+					text: 'Illus. {elemidinfo-artist}',
+					x: card.centeredArtistX / card.width || 0.1,
+					y: card.centeredArtistY / card.height || 0.91,
+					width: 0.8,
+					height: calculatedSize,
+					oneLine: true,
+					font: 'mplantin',
+					size: calculatedSize,
+					color: card.bottomInfoColor,
+					align: 'center',
+					shadowX: 0.0021,
+					shadowY: 0.0015
+				};
+			} else {
+				// Only show topLeft and rarity when centered artist is disabled
+				bottomInfoConfig.topLeft = {text:'{elemidinfo-number}', x:0.0647, y:0.9377, width:0.8707, height:0.0171, oneLine:true, font:'gothammedium', size:0.0171, color:card.bottomInfoColor, outlineWidth:0.003};
+				bottomInfoConfig.rarity = {text:'{loadx}{elemidinfo-rarity}', x:0.0647, y:0.9377, width:0.8707, height:0.0171, oneLine:true, font:'gothammedium', size:0.0171, color:card.bottomInfoColor, outlineWidth:0.003};
+				bottomInfoConfig.midLeft = {text:'{elemidinfo-set} \u2022 {elemidinfo-language}  {savex}{fontbelerenbsc}{fontsize' + scaleHeight(0.001) + '}{upinline' + scaleHeight(0.0005) + '}\uFFEE{savex2}{elemidinfo-artist}', x:0.0647, y:0.9548, width:0.8707, height:0.0171, oneLine:true, font:'gothammedium', size:0.0171, color: card.bottomInfoColor, outlineWidth:0.003};
+			}
+
+			await loadBottomInfo(bottomInfoConfig);
 		}
 }
 //Canvas management
@@ -4982,6 +5038,31 @@ async function resetSerial() {
 	drawCard();
 }
 
+function toggleCenteredArtist() {
+	centeredArtistEnabled = document.querySelector('#enableCenteredArtist').checked;
+	localStorage.setItem('centeredArtistEnabled', centeredArtistEnabled);
+	setBottomInfoStyle();
+}
+
+async function centeredArtistEdited() {
+	card.centeredArtistX = document.querySelector('#centered-artist-x').value;
+	card.centeredArtistY = document.querySelector('#centered-artist-y').value;
+	card.centeredArtistFontSize = document.querySelector('#centered-artist-font-size').value;
+	setBottomInfoStyle();
+}
+
+async function resetCenteredArtist() {
+	card.centeredArtistX = scaleX(201/2010);
+	card.centeredArtistY = scaleY(2557/2814);
+	card.centeredArtistFontSize = 150;
+
+	document.querySelector('#centered-artist-x').value = card.centeredArtistX;
+	document.querySelector('#centered-artist-y').value = card.centeredArtistY;
+	document.querySelector('#centered-artist-font-size').value = card.centeredArtistFontSize;
+
+	setBottomInfoStyle();
+}
+
 function artistEdited(value) {
 	document.querySelector('#art-artist').value = value;
 	document.querySelector('#info-artist').value = value;
@@ -6890,6 +6971,11 @@ if (!localStorage.getItem('enableNewCollectorStyle')) {
 	localStorage.setItem('enableNewCollectorStyle', 'false');
 } else {
 	document.querySelector('#enableNewCollectorStyle').checked = (localStorage.getItem('enableNewCollectorStyle') == 'true');
+}
+if (!localStorage.getItem('centeredArtistEnabled')) {
+	localStorage.setItem('centeredArtistEnabled', 'false');
+} else {
+	document.querySelector('#enableCenteredArtist').checked = (localStorage.getItem('centeredArtistEnabled') == 'true');
 }
 if (!localStorage.getItem('enableCollectorInfo')) {
 	localStorage.setItem('enableCollectorInfo', 'true');
