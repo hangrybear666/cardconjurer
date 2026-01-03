@@ -155,7 +155,7 @@ async function setBottomInfoStyle() {
 
 			// Add artist display based on toggle state
 			if (centeredArtistEnabled) {
-				const fontSizePercent = card.centeredArtistFontSize || 150;
+				const fontSizePercent = card.centeredArtistFontSize || 125;
 				const baseFontSize = 0.0267; // Seventh Edition base font size
 				const calculatedSize = baseFontSize * (fontSizePercent / 100);
 
@@ -191,7 +191,7 @@ async function setBottomInfoStyle() {
 
 			// Add artist display based on toggle state
 			if (centeredArtistEnabled) {
-				const fontSizePercent = card.centeredArtistFontSize || 150;
+				const fontSizePercent = card.centeredArtistFontSize || 125;
 				const baseFontSize = 0.0267; // Seventh Edition base font size
 				const calculatedSize = baseFontSize * (fontSizePercent / 100);
 
@@ -5054,7 +5054,7 @@ async function centeredArtistEdited() {
 async function resetCenteredArtist() {
 	card.centeredArtistX = scaleX(201/2010);
 	card.centeredArtistY = scaleY(2557/2814);
-	card.centeredArtistFontSize = 150;
+	card.centeredArtistFontSize = 125;
 
 	document.querySelector('#centered-artist-x').value = card.centeredArtistX;
 	document.querySelector('#centered-artist-y').value = card.centeredArtistY;
