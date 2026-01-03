@@ -155,15 +155,15 @@ async function setBottomInfoStyle() {
 
 			// Add artist display based on toggle state
 			if (centeredArtistEnabled) {
-				const fontSizePercent = card.centeredArtistFontSize || 120;
+				const fontSizePercent = card.centeredArtistFontSize || 100;
 				const baseFontSize = 0.0267; // Seventh Edition base font size
 				const calculatedSize = baseFontSize * (fontSizePercent / 100);
-				const textColorOverride = "#BBBBBB"
+				const textColorOverride = "#DDDDDD"
 
 				bottomInfoConfig.centeredArtist = {
 					text: 'Illus. {elemidinfo-artist}',
 					x: card.centeredArtistX / card.width || 0.1,
-					y: card.centeredArtistY / card.height || 0.91,
+					y: card.centeredArtistY / card.height || 0.883,
 					width: 0.8,
 					height: calculatedSize,
 					oneLine: true,
@@ -192,15 +192,15 @@ async function setBottomInfoStyle() {
 
 			// Add artist display based on toggle state
 			if (centeredArtistEnabled) {
-				const fontSizePercent = card.centeredArtistFontSize || 120;
+				const fontSizePercent = card.centeredArtistFontSize || 100;
 				const baseFontSize = 0.0267; // Seventh Edition base font size
 				const calculatedSize = baseFontSize * (fontSizePercent / 100);
-				const textColorOverride = "#BBBBBB"
+				const textColorOverride = "#DDDDDD"
 
 				bottomInfoConfig.centeredArtist = {
 					text: 'Illus. {elemidinfo-artist}',
 					x: card.centeredArtistX / card.width || 0.1,
-					y: card.centeredArtistY / card.height || 0.91,
+					y: card.centeredArtistY / card.height || 0.883,
 					width: 0.8,
 					height: calculatedSize,
 					oneLine: true,
@@ -5055,8 +5055,8 @@ async function centeredArtistEdited() {
 
 async function resetCenteredArtist() {
 	card.centeredArtistX = scaleX(201/2010);
-	card.centeredArtistY = scaleY(2557/2814);
-	card.centeredArtistFontSize = 120;
+	card.centeredArtistY = scaleY(2485/2814);
+	card.centeredArtistFontSize = 100;
 
 	document.querySelector('#centered-artist-x').value = card.centeredArtistX;
 	document.querySelector('#centered-artist-y').value = card.centeredArtistY;
