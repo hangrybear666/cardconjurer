@@ -155,9 +155,10 @@ async function setBottomInfoStyle() {
 
 			// Add artist display based on toggle state
 			if (centeredArtistEnabled) {
-				const fontSizePercent = card.centeredArtistFontSize || 125;
+				const fontSizePercent = card.centeredArtistFontSize || 120;
 				const baseFontSize = 0.0267; // Seventh Edition base font size
 				const calculatedSize = baseFontSize * (fontSizePercent / 100);
+				const textColorOverride = "#BBBBBB"
 
 				bottomInfoConfig.centeredArtist = {
 					text: 'Illus. {elemidinfo-artist}',
@@ -168,7 +169,7 @@ async function setBottomInfoStyle() {
 					oneLine: true,
 					font: 'mplantin',
 					size: calculatedSize,
-					color: card.bottomInfoColor,
+					color: textColorOverride,
 					align: 'center',
 					shadowX: 0.0021,
 					shadowY: 0.0015
@@ -191,9 +192,10 @@ async function setBottomInfoStyle() {
 
 			// Add artist display based on toggle state
 			if (centeredArtistEnabled) {
-				const fontSizePercent = card.centeredArtistFontSize || 125;
+				const fontSizePercent = card.centeredArtistFontSize || 120;
 				const baseFontSize = 0.0267; // Seventh Edition base font size
 				const calculatedSize = baseFontSize * (fontSizePercent / 100);
+				const textColorOverride = "#BBBBBB"
 
 				bottomInfoConfig.centeredArtist = {
 					text: 'Illus. {elemidinfo-artist}',
@@ -204,7 +206,7 @@ async function setBottomInfoStyle() {
 					oneLine: true,
 					font: 'mplantin',
 					size: calculatedSize,
-					color: card.bottomInfoColor,
+					color: textColorOverride,
 					align: 'center',
 					shadowX: 0.0021,
 					shadowY: 0.0015
@@ -5054,7 +5056,7 @@ async function centeredArtistEdited() {
 async function resetCenteredArtist() {
 	card.centeredArtistX = scaleX(201/2010);
 	card.centeredArtistY = scaleY(2557/2814);
-	card.centeredArtistFontSize = 125;
+	card.centeredArtistFontSize = 120;
 
 	document.querySelector('#centered-artist-x').value = card.centeredArtistX;
 	document.querySelector('#centered-artist-y').value = card.centeredArtistY;
